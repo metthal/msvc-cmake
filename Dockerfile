@@ -1,6 +1,6 @@
 # escape=`
 
-FROM microsoft/dotnet-framework:4.7.2-runtime
+FROM mcr.microsoft.com/windows/servercore:10.0.14393.2848
 
 SHELL ["cmd", "/S", "/C"]
 
@@ -16,7 +16,7 @@ RUN C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache `
 
 RUN powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
-RUN choco install -Y cmake
+RUN choco install -Y cmake --version 3.14.0 --installargs 'ADD_CMAKE_TO_PATH=System'
 
 ENTRYPOINT C:\BuildTools\Common7\Tools\VsDevCmd.bat &&
 CMD ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
